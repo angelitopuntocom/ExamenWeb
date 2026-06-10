@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MiApp.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5178857f378b3d0e3a145f1eeab24e27812ae949")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9331fa242ea8a644f518ac72967111083e04a4e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("MiApp.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MiApp.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
