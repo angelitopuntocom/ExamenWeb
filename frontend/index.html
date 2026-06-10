@@ -5,22 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Portal de Eventos</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', sans-serif; background: #f4f6fb; color: #222; }
+   * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #fff5f7; color: #72243E; }
 
     header {
-      background: #1a1a2e; color: white; padding: 1rem 2rem;
+      background: #993556; color: white; padding: 1rem 2rem;
       display: flex; justify-content: space-between; align-items: center;
     }
     header h1 { font-size: 1.4rem; }
-    header a { color: #e94560; text-decoration: none; font-weight: bold; }
+    header a { color: #F4C0D1; text-decoration: none; font-weight: bold; }
+    header a:hover { color: white; }
 
     .search-bar {
       max-width: 900px; margin: 2rem auto 1rem; padding: 0 1rem;
     }
     .search-bar input {
-      width: 100%; padding: 0.75rem 1rem; border-radius: 8px;
-      border: 1px solid #ddd; font-size: 1rem;
+      width: 100%; padding: 0.75rem 1rem; border-radius: 20px;
+      border: 1px solid #ED93B1; font-size: 1rem; outline: none;
+      background: white; color: #72243E;
     }
 
     .events-grid {
@@ -29,48 +31,50 @@
     }
 
     .event-card {
-      background: white; border-radius: 12px; padding: 1.25rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer;
+      background: white; border-radius: 16px; padding: 1.25rem;
+      border: 0.5px solid #F4C0D1; cursor: pointer;
       transition: transform 0.2s;
     }
     .event-card:hover { transform: translateY(-4px); }
-    .event-card h3 { color: #1a1a2e; margin-bottom: 0.5rem; }
-    .event-card .date { color: #e94560; font-size: 0.85rem; margin-bottom: 0.4rem; }
-    .event-card .location { color: #666; font-size: 0.85rem; margin-bottom: 0.75rem; }
-    .event-card .price-from { font-weight: bold; color: #1a1a2e; }
-    .btn { 
+    .event-card h3 { color: #72243E; margin-bottom: 0.5rem; }
+    .event-card .date { color: #D4537E; font-size: 0.85rem; margin-bottom: 0.4rem; }
+    .event-card .location { color: #993556; font-size: 0.85rem; margin-bottom: 0.75rem; }
+    .event-card .price-from { font-weight: bold; color: #72243E; }
+    .btn {
       display: inline-block; margin-top: 0.75rem; padding: 0.5rem 1.2rem;
-      background: #e94560; color: white; border: none; border-radius: 6px;
+      background: #993556; color: white; border: none; border-radius: 20px;
       cursor: pointer; font-size: 0.9rem; width: 100%; text-align: center;
     }
-    .btn:hover { background: #c73652; }
+    .btn:hover { background: #72243E; }
 
     .modal-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center;
+      background: rgba(153,53,86,0.3); z-index: 100; justify-content: center; align-items: center;
     }
     .modal-overlay.active { display: flex; }
     .modal {
-      background: white; border-radius: 14px; padding: 2rem;
+      background: white; border-radius: 20px; padding: 2rem;
       width: 90%; max-width: 480px; position: relative;
+      border: 0.5px solid #F4C0D1;
     }
-    .modal h2 { margin-bottom: 0.5rem; color: #1a1a2e; }
-    .modal .meta { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
-    .modal label { display: block; margin-bottom: 0.3rem; font-weight: 600; }
+    .modal h2 { margin-bottom: 0.5rem; color: #72243E; }
+    .modal .meta { color: #D4537E; font-size: 0.9rem; margin-bottom: 1rem; }
+    .modal label { display: block; margin-bottom: 0.3rem; font-weight: 600; color: #72243E; }
     .modal select, .modal input[type=number] {
-      width: 100%; padding: 0.6rem; border: 1px solid #ddd;
-      border-radius: 6px; margin-bottom: 1rem; font-size: 1rem;
+      width: 100%; padding: 0.6rem; border: 1px solid #ED93B1;
+      border-radius: 10px; margin-bottom: 1rem; font-size: 1rem; color: #72243E;
     }
-    .total { font-size: 1.2rem; font-weight: bold; color: #1a1a2e; margin-bottom: 1rem; }
+    .total { font-size: 1.2rem; font-weight: bold; color: #993556; margin-bottom: 1rem; }
     .close-btn {
       position: absolute; top: 1rem; right: 1rem;
-      background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #999;
+      background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #ED93B1;
     }
     .success-msg {
-      display: none; background: #d4edda; color: #155724;
-      border-radius: 8px; padding: 1rem; margin-top: 1rem; text-align: center;
+      display: none; background: #FBEAF0; color: #72243E;
+      border-radius: 10px; padding: 1rem; margin-top: 1rem; text-align: center;
+      border: 1px solid #ED93B1;
     }
-    .no-events { text-align: center; color: #999; padding: 3rem; }
+    .no-events { text-align: center; color: #D4537E; padding: 3rem; }
   </style>
 </head>
 <body>
