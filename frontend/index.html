@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portal de Eventos</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f6fb; color: #222; }
+
+    header {
+      background: #1a1a2e; color: white; padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    header h1 { font-size: 1.4rem; }
+    header a { color: #e94560; text-decoration: none; font-weight: bold; }
+
+    .search-bar {
+      max-width: 900px; margin: 2rem auto 1rem; padding: 0 1rem;
+    }
+    .search-bar input {
+      width: 100%; padding: 0.75rem 1rem; border-radius: 8px;
+      border: 1px solid #ddd; font-size: 1rem;
+    }
+
+    .events-grid {
+      max-width: 900px; margin: 0 auto; padding: 0 1rem 3rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;
+    }
+
+    .event-card {
+      background: white; border-radius: 12px; padding: 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .event-card:hover { transform: translateY(-4px); }
+    .event-card h3 { color: #1a1a2e; margin-bottom: 0.5rem; }
+    .event-card .date { color: #e94560; font-size: 0.85rem; margin-bottom: 0.4rem; }
+    .event-card .location { color: #666; font-size: 0.85rem; margin-bottom: 0.75rem; }
+    .event-card .price-from { font-weight: bold; color: #1a1a2e; }
+    .btn { 
+      display: inline-block; margin-top: 0.75rem; padding: 0.5rem 1.2rem;
+      background: #e94560; color: white; border: none; border-radius: 6px;
+      cursor: pointer; font-size: 0.9rem; width: 100%; text-align: center;
+    }
+    .btn:hover { background: #c73652; }
+
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: white; border-radius: 14px; padding: 2rem;
+      width: 90%; max-width: 480px; position: relative;
+    }
+    .modal h2 { margin-bottom: 0.5rem; color: #1a1a2e; }
+    .modal .meta { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
+    .modal label { display: block; margin-bottom: 0.3rem; font-weight: 600; }
+    .modal select, .modal input[type=number] {
+      width: 100%; padding: 0.6rem; border: 1px solid #ddd;
+      border-radius: 6px; margin-bottom: 1rem; font-size: 1rem;
+    }
+    .total { font-size: 1.2rem; font-weight: bold; color: #1a1a2e; margin-bottom: 1rem; }
+    .close-btn {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #999;
+    }
+    .success-msg {
+      display: none; background: #d4edda; color: #155724;
+      border-radius: 8px; padding: 1rem; margin-top: 1rem; text-align: center;
+    }
+    .no-events { text-align: center; color: #999; padding: 3rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🎟 Portal de Eventos</h1>
+  <a href="admin.html">Panel Admin →</a>
+</header>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Buscar eventos por nombre o lugar..." oninput="filterEvents()" />
+</div>
+
+<div class="events-grid" id="eventsGrid"></div>
+
+<!-- Modal de compra -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal()">✕</button>
+    <h2 id="modalTitle"></h2>
+    <p class="meta" id="modalMeta"></p>
+    <p id="modalDesc" style="margin-bottom:1rem; color:#444;"></p>
+
+    <label>Zona</label>
+    <select id="zoneSelect" onchange="updateTotal()"></select>
+
+    <label>Cantidad</label>
+    <input type="number" id="quantityInput" value="1" min="1" max="10" oninput="updateTotal()" />
+
+    <div class="total" id="totalDisplay">Total: $0</div>
+    <button class="btn" onclick="confirmPurchase()">Confirmar Compra</button>
+    <div class="success-msg" id="successMsg">✅ ¡Compra realizada con éxito!</div>
+  </div>
+</div>
+
+<script src="js/mockData.js"></script>
+<script src="js/api.js"></script>
+<script src="js/public.js"></script>
+</body>
+</html>
