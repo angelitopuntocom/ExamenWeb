@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar Sesión</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff5f7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 20px;
+      border: 0.5px solid #F4C0D1;
+      padding: 2.5rem 2rem;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-card .logo {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-card h1 {
+      color: #72243E;
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .login-card .subtitle {
+      color: #D4537E;
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #993556;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 1px solid #ED93B1;
+      border-radius: 10px;
+      font-size: 1rem;
+      color: #72243E;
+      outline: none;
+      background: white;
+    }
+
+    .form-group input:focus {
+      border-color: #993556;
+    }
+
+    .error-msg {
+      color: #D4537E;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 0.75rem;
+      background: #993556;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    .btn-login:hover { background: #72243E; }
+
+    .btn-login:disabled {
+      background: #F4C0D1;
+      cursor: not-allowed;
+    }
+
+    .divider {
+      margin: 1.5rem 0;
+      border: none;
+      border-top: 1px solid #FBEAF0;
+    }
+
+    .back-link {
+      color: #D4537E;
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+    .back-link:hover { color: #993556; }
+
+    .alert {
+      display: none;
+      background: #FBEAF0;
+      color: #72243E;
+      border: 1px solid #ED93B1;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="logo">🎀</div>
+  <h1>Panel de Administración</h1>
+  <p class="subtitle">Inicia sesión para continuar</p>
+
+  <div class="alert" id="alertMsg"></div>
+
+  <div class="form-group">
+    <label>Usuario</label>
+    <input type="text" id="username" placeholder="admin" />
+  </div>
+
+  <div class="form-group">
+    <label>Contraseña</label>
+    <input type="password" id="password" placeholder="••••••••" />
+  </div>
+
+  <button class="btn-login" id="btnLogin" onclick="handleLogin()">Iniciar Sesión</button>
+
+  <hr class="divider" />
+  <a href="index.html" class="back-link">← Volver al Portal Público</a>
+</div>
+
+<script>
+  // Verificar si ya hay sesión activa
+  const token = localStorage.getItem("token");
+  if (token) window.location.href = "admin.html";
+
+  async function handleLogin() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const btn = document.getElementById("btnLogin");
+    const alert = document.getElementById("alertMsg");
+
+    alert.style.display = "none";
+
+    if (!username || !password) {
+      showAlert("Por favor ingresa usuario y contraseña.");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "Iniciando sesión...";
+
+    try {
+      // Cuando Val termine la API, esto conectará con el endpoint real
+      const USE_MOCK = true;
+
+      if (USE_MOCK) {
+        // Simulación de login con mock
+        await new Promise(r => setTimeout(r, 800));
+        if (username === "admin" && password === "admin123") {
+          localStorage.setItem("token", "mock-token-admin");
+          localStorage.setItem("user", username);
+          window.location.href = "admin.html";
+        } else {
+          showAlert("Usuario o contraseña incorrectos.");
+          btn.disabled = false;
+          btn.textContent = "Iniciar Sesión";
+        }
+        return;
+      }
+
+      // Login real con JWT
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (!res.ok) {
+        showAlert("Usuario o contraseña incorrectos.");
+        btn.disabled = false;
+        btn.textContent = "Iniciar Sesión";
+        return;
+      }
+
+      const data = await res.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", username);
+      window.location.href = "admin.html";
+
+    } catch (err) {
+      showAlert("Error al conectar con el servidor.");
+      btn.disabled = false;
+      btn.textContent = "Iniciar Sesión";
+    }
+  }
+
+  function showAlert(msg) {
+    const alert = document.getElementById("alertMsg");
+    alert.textContent = msg;
+    alert.style.display = "block";
+  }
+
+  // Login con Enter
+  document.addEventListener("keydown", e => {
+    if (e.key === "Enter") handleLogin();
+  });
+</script>
+</body>
+</html>
