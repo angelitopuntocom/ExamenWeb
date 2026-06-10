@@ -7,6 +7,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', sans-serif; background: #f4f6fb; color: #222; }
+    .error-msg { color: #e94560; font-size: 0.8rem; display: block; margin-top: -0.75rem; margin-bottom: 0.75rem; }
 
     header {
       background: #1a1a2e; color: white; padding: 1rem 2rem;
@@ -119,17 +120,20 @@
   <div class="modal">
     <h2 id="modalTitle">Nuevo Evento</h2>
 
-    <label>Nombre *</label>
+   <label>Nombre *</label>
     <input type="text" id="fieldName" placeholder="Nombre del evento" />
+    <span class="error-msg" id="error-name"></span>
 
     <label>Descripción</label>
     <textarea id="fieldDesc" placeholder="Descripción del evento"></textarea>
 
     <label>Fecha y Hora *</label>
     <input type="datetime-local" id="fieldDate" />
+    <span class="error-msg" id="error-date"></span>
 
     <label>Lugar *</label>
     <input type="text" id="fieldLocation" placeholder="Lugar del evento" />
+    <span class="error-msg" id="error-location"></span>
 
     <div class="modal-actions">
       <button class="btn-close-modal" onclick="closeFormModal()">Cancelar</button>
