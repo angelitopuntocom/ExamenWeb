@@ -7,7 +7,7 @@ namespace MiApp.Infrastructure.Persistence;
 
 public static class DbSeeder
 {
-    public static async Task SeedAsync(AppDbContext context, IPasswordHasher passwordHasher)
+    public static async Task SeedAsync(ApplicationDbContext context, IPasswordHasher passwordHasher)
     {
         if (await context.Users.AnyAsync()) return;
 

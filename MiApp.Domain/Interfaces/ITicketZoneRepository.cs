@@ -1,6 +1,8 @@
 using MiApp.Domain.Entities;
 using MiApp.Domain.Enums;
+
 namespace MiApp.Domain.Interfaces;
+
 public interface ITicketZoneRepository
 {
     Task<IEnumerable<TicketZone>> GetByEventIdAsync(int eventId, CancellationToken ct = default);

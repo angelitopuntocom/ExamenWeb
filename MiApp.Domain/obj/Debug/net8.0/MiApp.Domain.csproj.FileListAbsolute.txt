@@ -1,0 +1,12 @@
+/workspaces/ExamenWeb/MiApp.Domain/bin/Debug/net8.0/MiApp.Domain.deps.json
+/workspaces/ExamenWeb/MiApp.Domain/bin/Debug/net8.0/MiApp.Domain.dll
+/workspaces/ExamenWeb/MiApp.Domain/bin/Debug/net8.0/MiApp.Domain.pdb
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/MiApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/MiApp.Domain.AssemblyInfoInputs.cache
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/MiApp.Domain.AssemblyInfo.cs
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/MiApp.Domain.csproj.CoreCompileInputs.cache
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/MiApp.Domain.sourcelink.json
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/MiApp.Domain.dll
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/refint/MiApp.Domain.dll
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/MiApp.Domain.pdb
+/workspaces/ExamenWeb/MiApp.Domain/obj/Debug/net8.0/ref/MiApp.Domain.dll

@@ -1,5 +1,7 @@
 using MiApp.Domain.Entities;
+
 namespace MiApp.Domain.Interfaces;
+
 public interface IEventRepository
 {
     Task<IEnumerable<Event>> GetAllAsync(CancellationToken ct = default);

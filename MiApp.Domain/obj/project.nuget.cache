@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "IdONzpwUZdU=",
+  "dgSpecHash": "u4R6bUn3uCM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jose_\\OneDrive\\Desktop\\AppCleanArchitecture\\AppCleanArchitecture\\MiApp.Domain\\MiApp.Domain.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/workspaces/ExamenWeb/MiApp.Domain/MiApp.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/codespace/.nuget/packages/microsoft.netcore.app.ref/8.0.25/microsoft.netcore.app.ref.8.0.25.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.25/microsoft.aspnetcore.app.ref.8.0.25.nupkg.sha512"
+  ],
   "logs": []
 }
