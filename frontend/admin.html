@@ -40,9 +40,7 @@
     tbody tr:hover { background: #fff5f7; }
     tbody tr { border-bottom: 1px solid #FBEAF0; }
 
-    .badge {
-      padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold;
-    }
+    .badge { padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
     .badge.active { background: #FBEAF0; color: #72243E; }
     .badge.cancelled { background: #F4C0D1; color: #4B1528; }
 
@@ -92,8 +90,11 @@
 <body>
 
 <header>
-  <h1>⚙️ Panel de Administración</h1>
-  <a href="index.html">← Portal Público</a>
+  <h1 id="adminTitle">⚙️ Panel de Administración</h1>
+  <nav style="display:flex; gap:1.5rem; align-items:center;">
+    <a href="index.html" style="color:#F4C0D1; text-decoration:none; font-size:0.9rem;">← Portal Público</a>
+    <button onclick="logout()" style="background:#72243E; color:white; border:none; border-radius:20px; padding:0.4rem 1rem; cursor:pointer; font-size:0.85rem;">Cerrar sesión</button>
+  </nav>
 </header>
 
 <div class="toolbar">
@@ -117,12 +118,11 @@
   </table>
 </div>
 
-<!-- Modal formulario -->
 <div class="modal-overlay" id="formModal">
   <div class="modal">
     <h2 id="modalTitle">Nuevo Evento</h2>
 
-   <label>Nombre *</label>
+    <label>Nombre *</label>
     <input type="text" id="fieldName" placeholder="Nombre del evento" />
     <span class="error-msg" id="error-name"></span>
 
@@ -145,6 +145,21 @@
 </div>
 
 <script src="js/mockData.js"></script>
+<script>
+  const token = localStorage.getItem("token");
+  if (!token) window.location.href = "login.html";
+
+  const user = localStorage.getItem("user");
+  if (user) {
+    document.getElementById("adminTitle").textContent = `⚙️ Panel de Administración — ${user}`;
+  }
+
+  function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+  }
+</script>
 <script src="js/api.js"></script>
 <script src="js/admin.js"></script>
 </body>
