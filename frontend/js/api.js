@@ -28,4 +28,47 @@ const EventAPI = {
     });
     return res.json();
   }
+  getAllAdmin: async () => {
+    if (USE_MOCK) return mockEvents;
+    const res = await fetch(`${API_BASE}/events`);
+    return res.json();
+  },
+
+  create: async (data) => {
+    if (USE_MOCK) {
+      const newEvent = { ...data, id: mockEvents.length + 1, status: "Active", zones: [] };
+      mockEvents.push(newEvent);
+      return newEvent;
+    }
+    const res = await fetch(`${API_BASE}/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    return res.json();
+  },
+
+  update: async (id, data) => {
+    if (USE_MOCK) {
+      const idx = mockEvents.findIndex(e => e.id === id);
+      if (idx !== -1) mockEvents[idx] = { ...mockEvents[idx], ...data };
+      return mockEvents[idx];
+    }
+    const res = await fetch(`${API_BASE}/events/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    return res.json();
+  },
+
+  cancel: async (id) => {
+    if (USE_MOCK) {
+      const ev = mockEvents.find(e => e.id === id);
+      if (ev) ev.status = "Cancelled";
+      return ev;
+    }
+    const res = await fetch(`${API_BASE}/events/${id}/cancel`, { method: "PATCH" });
+    return res.json();
+  }
 };
