@@ -45,7 +45,11 @@ function filterTable() {
 function openCreate() {
   editingId = null;
   document.getElementById("modalTitle").textContent = "Nuevo Evento";
-  document.getElementById("eventForm").reset();
+  document.getElementById("fieldName").value = "";
+  document.getElementById("fieldDesc").value = "";
+  document.getElementById("fieldDate").value = "";
+  document.getElementById("fieldLocation").value = "";
+  clearErrors();
   document.getElementById("formModal").classList.add("active");
 }
 
@@ -59,26 +63,78 @@ function openEdit(id) {
   document.getElementById("fieldDesc").value = ev.description;
   document.getElementById("fieldDate").value = ev.date.substring(0, 16);
   document.getElementById("fieldLocation").value = ev.location;
+  clearErrors();
   document.getElementById("formModal").classList.add("active");
 }
 
 function closeFormModal() {
   document.getElementById("formModal").classList.remove("active");
   editingId = null;
+  clearErrors();
 }
 
+// ── Validaciones ──────────────────────────────────────────
+function showError(fieldId, message) {
+  const el = document.getElementById("error-" + fieldId);
+  if (el) el.textContent = message;
+}
+
+function clearErrors() {
+  ["name", "date", "location"].forEach(f => {
+    const el = document.getElementById("error-" + f);
+    if (el) el.textContent = "";
+  });
+}
+
+function validateForm() {
+  clearErrors();
+  let valid = true;
+
+  const name = document.getElementById("fieldName").value.trim();
+  const date = document.getElementById("fieldDate").value;
+  const location = document.getElementById("fieldLocation").value.trim();
+
+  if (!name) {
+    showError("name", "El nombre es obligatorio.");
+    valid = false;
+  } else if (name.length < 3) {
+    showError("name", "El nombre debe tener al menos 3 caracteres.");
+    valid = false;
+  }
+
+  if (!date) {
+    showError("date", "La fecha es obligatoria.");
+    valid = false;
+  } else {
+    const selected = new Date(date);
+    const now = new Date();
+    if (selected <= now) {
+      showError("date", "La fecha debe ser en el futuro.");
+      valid = false;
+    }
+  }
+
+  if (!location) {
+    showError("location", "El lugar es obligatorio.");
+    valid = false;
+  } else if (location.length < 3) {
+    showError("location", "El lugar debe tener al menos 3 caracteres.");
+    valid = false;
+  }
+
+  return valid;
+}
+// ─────────────────────────────────────────────────────────
+
 async function saveEvent() {
+  if (!validateForm()) return;
+
   const data = {
     name: document.getElementById("fieldName").value.trim(),
     description: document.getElementById("fieldDesc").value.trim(),
     date: document.getElementById("fieldDate").value,
     location: document.getElementById("fieldLocation").value.trim()
   };
-
-  if (!data.name || !data.date || !data.location) {
-    alert("Por favor llena todos los campos obligatorios.");
-    return;
-  }
 
   if (editingId) {
     await EventAPI.update(editingId, data);
